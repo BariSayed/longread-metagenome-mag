@@ -1,0 +1,31 @@
+# Nextflow
+.nextflow/
+.nextflow.log*
+work/
+report_*.html
+timeline_*.html
+trace_*.txt
+dag_*.html
+
+# Containers / caches
+containers/cache/
+*.sif
+*.img
+
+# Data — never commit raw reads / assemblies / bins
+*.fastq
+*.fastq.gz
+*.fq.gz
+*.bam
+*.bai
+*.fasta
+*.fa
+*.fna
+assembly/
+bins/
+
+# OS / editors
+.DS_Store
+__pycache__/
+*.pyc
+.Rhistory

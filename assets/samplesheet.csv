@@ -1,0 +1,6 @@
+sample,run_accession,biosample,read_type,instrument,bases_gb,fastq_ftp
+SAMN31324801,SRR22034051,SAMN31324801,pacbio_subreads,Sequel II,11.09,ftp.sra.ebi.ac.uk/vol1/fastq/SRR220/051/SRR22034051/SRR22034051_subreads.fastq.gz
+SAMN31324800,SRR22034052,SAMN31324800,pacbio_subreads,Sequel II,14.78,ftp.sra.ebi.ac.uk/vol1/fastq/SRR220/052/SRR22034052/SRR22034052_subreads.fastq.gz
+SAMN31324799,SRR22034053,SAMN31324799,pacbio_subreads,Sequel II,11.70,ftp.sra.ebi.ac.uk/vol1/fastq/SRR220/053/SRR22034053/SRR22034053_subreads.fastq.gz
+SAMN31324798,SRR22034054,SAMN31324798,pacbio_subreads,Sequel II,8.44,ftp.sra.ebi.ac.uk/vol1/fastq/SRR220/054/SRR22034054/SRR22034054_subreads.fastq.gz
+SAMN31324797,SRR22034055,SAMN31324797,pacbio_subreads,Sequel II,19.61,ftp.sra.ebi.ac.uk/vol1/fastq/SRR220/055/SRR22034055/SRR22034055_subreads.fastq.gz

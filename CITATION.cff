@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this pipeline, please cite it and the original dataset paper."
+title: "longread-metagenome-mag: a reproducible Nextflow pipeline for long-read metagenome MAG recovery and annotation"
+authors:
+  - family-names: Bari
+    given-names: Sayed Mashequl
+    alias: BariSayed
+version: 0.1.0
+date-released: "2026-11-17"
+license: MIT
+repository-code: "https://github.com/BariSayed/longread-metagenome-mag"
+keywords:
+  - metagenomics
+  - long-read sequencing
+  - PacBio HiFi
+  - metagenome-assembled genomes
+  - Nextflow
+references:
+  - type: article
+    title: "Mosaic environment-driven evolution of the deep-sea mussel Gigantidas platifrons bacterial endosymbiont"
+    authors:
+      - family-names: Sun
+        given-names: Yan
+    year: 2023
+    journal: Microbiome
+    volume: 11
+    issue: 1
+    article-number: 253
+    doi: 10.1186/s40168-023-01695-8

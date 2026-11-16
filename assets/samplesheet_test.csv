@@ -1,0 +1,2 @@
+sample,run_accession,biosample,platform,instrument,bases_gb,fastq
+test,SRR22034054,SAMN31324798,pacbio_hifi,Sequel II,8.44,/path/to/subsampled_test.fastq.gz
