@@ -33,20 +33,25 @@ for reproducibility.
 | Samples | 5 (8.4–19.6 Gb each; see `assets/samplesheet.csv`) |
 | Source paper | Sun Y, Wang M, Cao L, *et al.* (2023) *Microbiome* **11(1):253**. **Mosaic environment-driven evolution of the deep-sea mussel *Gigantidas platifrons* bacterial endosymbiont.** DOI: [10.1186/s40168-023-01695-8](https://doi.org/10.1186/s40168-023-01695-8) |
 
-### Read type: subreads vs HiFi (resolve before the run)
+### Read type (checked): usable directly as HiFi
 
-ENA serves these runs as files named `*_subreads.fastq.gz`. The source study
-generated HiFi (CCS) reads with SMRTLink 6.0, but the **deposited FASTQ are
-subreads**, and `ccs` needs the original **subreads BAM** (per-ZMW passes), not
-a FASTQ. Two paths, decided per run on the server:
+The subreads-vs-HiFi question was resolved before building the run config:
 
-- **If the subreads BAM is recoverable** (via `prefetch` + the SRA original
-  format): run `ccs` -> HiFi, then assemble with metaMDBG (`--platform hifi`).
-- **If only FASTQ subreads are available**: treat the data as **CLR** and
-  assemble with metaFlye (`--platform clr`), which this pipeline supports.
+- **No original subreads BAM exists** in ENA/SRA for these runs (`submitted_ftp`
+  is empty for all 5), so `ccs` **cannot** be run — the BAM with per-ZMW passes
+  is not deposited.
+- The deposited FASTQ (named `*_subreads.fastq.gz`) were inspected directly on
+  run `SRR22034054`: reads are **long (median ~13.3 kb, range 4–19 kb) with high
+  consensus quality** — i.e. CCS/HiFi-grade, not noisy CLR subreads (raw CLR
+  would be ~Q10; here per-read quality is saturated high).
 
-The README and repo description will be updated to state exactly which path was
-used once confirmed. Until then, no "HiFi" result is claimed.
+**Decision:** use the reads **directly as HiFi** (`--platform hifi`, metaMDBG);
+no `ccs` step. A `--platform clr` path (metaFlye) is kept available as a general
+fallback but is not needed here.
+
+*Caveat:* the FASTQ quality strings are encoded near the top of the Phred range
+(non-standard), so per-base QVs are not taken at face value; assembly relies on
+read overlaps, not QV.
 
 
 ## Workflow
