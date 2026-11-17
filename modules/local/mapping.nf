@@ -6,7 +6,7 @@ process MINIMAP2_MAP {
     output: tuple val(sample), path("${sample}.sorted.bam"), path("${sample}.sorted.bam.bai"), emit: bam
 
     script:
-    def preset = params.platform == 'nanopore' ? 'map-ont' : 'map-hifi'
+    def preset = params.platform == 'nanopore' ? 'map-ont' : (params.platform == 'clr' ? 'map-pb' : 'map-hifi')
     """
     minimap2 -ax ${preset} -t ${task.cpus} ${contigs} ${reads} \\
       | samtools sort -@ ${task.cpus} -o ${sample}.sorted.bam -

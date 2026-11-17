@@ -12,7 +12,7 @@ process MINIMAP2_HOST {
     path "${sample}.host_removal.stats.txt",             emit: stats
 
     script:
-    def preset = params.platform == 'nanopore' ? 'map-ont' : 'map-hifi'
+    def preset = params.platform == 'nanopore' ? 'map-ont' : (params.platform == 'clr' ? 'map-pb' : 'map-hifi')
     """
     minimap2 -ax ${preset} -t ${task.cpus} ${host} ${reads} \\
       | samtools view -b -f 4 - \\

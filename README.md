@@ -2,10 +2,11 @@
 
 **A reproducible Nextflow (DSL2) pipeline for long-read metagenomics: PacBio HiFi / Nanopore reads → metagenome assembly → genome binning → MAG quality control → taxonomy → function → AMR & mobile elements.**
 
-Demonstrated on a published deep-sea mussel symbiont dataset, the workflow is
-written to run unchanged on any host-associated long-read shotgun metagenome
-(fish gut, gill, skin mucus, aquaculture samples). All steps run in pinned
-Apptainer containers for reproducibility.
+Built around a published deep-sea mussel symbiont dataset — **results pending the
+first server run (see [Results](#results))** — the workflow is written to run
+unchanged on any host-associated long-read shotgun metagenome (fish gut, gill,
+skin mucus, aquaculture samples). All steps run in pinned Apptainer containers
+for reproducibility.
 
 > This repository re-analyses **public** data. No raw reads or large
 > assemblies are committed — only the sample sheet, workflow code and small
@@ -31,6 +32,22 @@ Apptainer containers for reproducibility.
 | Platform | PacBio Sequel II — ENA serves raw **subreads** (source study generated CCS/HiFi; see note below) |
 | Samples | 5 (8.4–19.6 Gb each; see `assets/samplesheet.csv`) |
 | Source paper | Sun Y, Wang M, Cao L, *et al.* (2023) *Microbiome* **11(1):253**. **Mosaic environment-driven evolution of the deep-sea mussel *Gigantidas platifrons* bacterial endosymbiont.** DOI: [10.1186/s40168-023-01695-8](https://doi.org/10.1186/s40168-023-01695-8) |
+
+### Read type: subreads vs HiFi (resolve before the run)
+
+ENA serves these runs as files named `*_subreads.fastq.gz`. The source study
+generated HiFi (CCS) reads with SMRTLink 6.0, but the **deposited FASTQ are
+subreads**, and `ccs` needs the original **subreads BAM** (per-ZMW passes), not
+a FASTQ. Two paths, decided per run on the server:
+
+- **If the subreads BAM is recoverable** (via `prefetch` + the SRA original
+  format): run `ccs` -> HiFi, then assemble with metaMDBG (`--platform hifi`).
+- **If only FASTQ subreads are available**: treat the data as **CLR** and
+  assemble with metaFlye (`--platform clr`), which this pipeline supports.
+
+The README and repo description will be updated to state exactly which path was
+used once confirmed. Until then, no "HiFi" result is claimed.
+
 
 ## Workflow
 

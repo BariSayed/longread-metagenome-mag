@@ -8,7 +8,8 @@ process per tool, so the exact software versions are recorded with the run.
 | Read QC          | NanoPlot 1.42                   | length/quality, N50 |
 | (HiFi generation)| pbccs 6.4                       | only if starting from subreads |
 | Host removal     | minimap2 2.28 + samtools        | `map-hifi`; unmapped reads kept |
-| Assembly         | metaMDBG 1.0                    | HiFi metagenome assembler (`--in-hifi`) |
+| Assembly (HiFi)  | metaMDBG 1.0                    | HiFi metagenome assembler (`--in-hifi`) |
+| Assembly (CLR)   | metaFlye 2.9.5                  | fallback for raw PacBio subreads / Nanopore (`--platform clr`) |
 | Read mapping     | minimap2 2.28                   | coverage for binning |
 | Binning          | MetaBAT2 2.15 + SemiBin2 2.1    | long-read mode |
 | Bin refinement   | DAS Tool 1.1.7                  | consensus of both binners |

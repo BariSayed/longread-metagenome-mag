@@ -19,11 +19,14 @@ while IFS=, read -r sample run rest; do
 done < assets/samplesheet.csv
 ```
 
-> **Note on read type.** ENA serves these runs as PacBio **subreads**. The
-> source study used CCS/HiFi reads. If HiFi (`ccs`) reads are required,
-> generate them from the subread BAMs with `pbccs`, or obtain the CCS reads
-> from the submitter. The `CCS` process label and `pbccs` container are
-> wired in `conf/base.config` for this step. See `docs/methods.md`.
+> **Note on read type (resolve first).** ENA serves these runs as PacBio
+> **subreads**. `ccs` needs the original **subreads BAM** (per-ZMW passes), not
+> a FASTQ, so check on one run whether the BAM is recoverable (`prefetch` + the
+> SRA original format).
+> - BAM recoverable -> run `ccs` (pbccs container is wired) -> `--platform hifi`.
+> - FASTQ only -> treat the data as **CLR**: run with `--platform clr` (metaFlye).
+>
+> Update the README to state which path was used. See `docs/methods.md`.
 
 ## 3. Configure databases
 Edit paths in `nextflow.config` (the `--*_db` params) or pass on the CLI.

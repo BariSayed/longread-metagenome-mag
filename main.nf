@@ -8,6 +8,7 @@ nextflow.enable.dsl = 2
 include { NANOPLOT }        from './modules/local/nanoplot.nf'
 include { MINIMAP2_HOST }   from './modules/local/host_removal.nf'
 include { METAMDBG }        from './modules/local/assembly.nf'
+    include { METAFLYE }        from './modules/local/assembly.nf'
 include { MINIMAP2_MAP }    from './modules/local/mapping.nf'
 include { METABAT2 }        from './modules/local/binning.nf'
 include { SEMIBIN2 }        from './modules/local/binning.nf'
@@ -63,16 +64,23 @@ workflow {
         ch_clean = ch_reads
     }
 
-    // 3. Per-sample assembly (metaMDBG for HiFi)
-    METAMDBG(ch_clean)
+    // 3. Per-sample assembly
+    //    hifi / nanopore -> metaMDBG ; clr (raw PacBio subreads) -> metaFlye
+    if (params.platform == 'clr') {
+        METAFLYE(ch_clean)
+        ch_contigs = METAFLYE.out.contigs
+    } else {
+        METAMDBG(ch_clean)
+        ch_contigs = METAMDBG.out.contigs
+    }
 
     // 4. Map reads back for coverage
-    MINIMAP2_MAP(METAMDBG.out.contigs.join(ch_clean))
+    MINIMAP2_MAP(ch_contigs.join(ch_clean))
 
     // 5. Binning (two binners) + refinement
-    METABAT2(METAMDBG.out.contigs.join(MINIMAP2_MAP.out.bam))
-    SEMIBIN2(METAMDBG.out.contigs.join(MINIMAP2_MAP.out.bam))
-    DASTOOL(METAMDBG.out.contigs
+    METABAT2(ch_contigs.join(MINIMAP2_MAP.out.bam))
+    SEMIBIN2(ch_contigs.join(MINIMAP2_MAP.out.bam))
+    DASTOOL(ch_contigs
              .join(METABAT2.out.bins)
              .join(SEMIBIN2.out.bins))
 
