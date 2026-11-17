@@ -102,6 +102,30 @@ longread-metagenome-mag/
 - ENA provides subreads; HiFi reads may need regeneration (`pbccs`).
 - MAG gene content is descriptive (presence/absence), without replicate statistics.
 
+## Relation to the source study
+
+This repository is an **independent re-analysis** of the public PRJNA891367 reads
+using a standard, current long-read MAG workflow. It is **not** a reproduction of
+the bespoke pipeline in Sun *et al.* (2023) — the two differ at most stages:
+
+| Stage | Sun *et al.* 2023 | This repo |
+|-------|-------------------|-----------|
+| Sequencing used | Illumina short-read **+** PacBio HiFi (CCS) | PacBio long-read only (the 5 CCS runs; ENA serves them as subreads) |
+| Read handling | CONCOCT k-mer clustering of reads into per-strain subdatasets | whole-sample assembly |
+| Assembly | Flye-meta (metaFlye), per cluster | metaMDBG |
+| Binning | MetaWRAP (MaxBin2, MetaBAT2, CONCOCT, VAMB, SolidBin, BinSanity) | MetaBAT2 + SemiBin2 -> DAS Tool |
+| MAG QC | CheckM | CheckM2 + GUNC |
+| dRep | pairwise ANI among assemblies (similarity heatmap) | cross-sample dereplication |
+| Taxonomy | GTDB-Tk | GTDB-Tk |
+
+The source study recovered **28 symbiont genomes** (mean completeness 89.2%, mean
+size 3.53 Mb) and focused on **within-species (strain-level) variation** of the
+methanotrophic endosymbiont across vent and seep habitats. This repo instead
+applies a reproducible, container-based community workflow to the same reads — the
+aim is a clean, portable pipeline and MAG set, not a re-derivation of the paper's
+strain-resolved result.
+
+
 ## License & citation
 
 Code released under the [MIT License](LICENSE). If you use this workflow,
